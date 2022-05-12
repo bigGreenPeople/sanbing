@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       title: '三饼',
       theme: FjAppTheme.norTheme,
       debugShowCheckedModeBanner: false,
-      // 路由
+      // 路由 dsa
       initialRoute: FjRouter.initialRoute,
       routes: FjRouter.routes,
       onGenerateRoute: FjRouter.generateRoute,
