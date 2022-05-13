@@ -13,8 +13,8 @@ class FjAppTheme {
   static final Color norTextColors = Colors.red;
 
   static final ThemeData norTheme = ThemeData(
-    primarySwatch: Colors.pink,
-    canvasColor: const Color.fromRGBO(255, 254, 222, 1),
+    primarySwatch: Colors.yellow,
+    canvasColor: Color.fromARGB(255, 240, 240, 240),
     textTheme: const TextTheme(
       bodyText1: TextStyle(fontSize: bodyFontSize),
       headline1: TextStyle(fontSize: smallFontSize, color: Colors.black87),
