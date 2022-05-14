@@ -33,6 +33,7 @@ dependencies:
   dio: ^3.0.9
   provider: ^4.0.4
   flutter_swiper: ^1.1.6
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
@@ -57,7 +58,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/json/
-    - assets/img/steam.png
+    - assets/img/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
