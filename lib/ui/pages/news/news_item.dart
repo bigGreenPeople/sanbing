@@ -44,7 +44,7 @@ class _FjNewsItemState extends State<FjNewsItem> {
   Padding buildBottom() {
     return Padding(
       padding: EdgeInsets.only(
-          top: 30.0.rpx, bottom: 30.0.rpx, left: 50.0.rpx, right: 50.0.rpx),
+          top: 15.0.rpx, bottom: 15.0.rpx, left: 50.0.rpx, right: 50.0.rpx),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

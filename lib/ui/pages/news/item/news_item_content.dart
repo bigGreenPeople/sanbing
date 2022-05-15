@@ -13,14 +13,14 @@ class FjNewsItemContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-          left: 15.0.rpx, right: 15.0.rpx, top: 5.rpx, bottom: 5.rpx),
+          left: 20.0.rpx, right: 20.0.rpx, top: 5.rpx, bottom: 5.rpx),
       child: Column(
         children: [
           Text(
             text,
             style: TextStyle(
-                color: const Color.fromARGB(255, 204, 204, 204),
-                fontSize: 30.0.rpx),
+                color: const Color.fromARGB(255, 172, 160, 160),
+                fontSize: 28.0.rpx),
           ),
           SizedBox(height: 10.0.rpx),
           image

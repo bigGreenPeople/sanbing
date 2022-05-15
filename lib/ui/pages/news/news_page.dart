@@ -9,9 +9,11 @@ import 'package:sanbing/ui/pages/news/news_item.dart';
 import 'package:sanbing/ui/pages/news/news_type_img.dart';
 
 import '../../widgets/search_text_field_widget.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class FjNewsScreen extends StatefulWidget {
   final String? _tab;
+
   const FjNewsScreen(this._tab, {Key? key}) : super(key: key);
 
   @override
@@ -21,11 +23,11 @@ class FjNewsScreen extends StatefulWidget {
 
 class _FjNewsScreenState extends State<FjNewsScreen> {
   final String? _tab;
+
   _FjNewsScreenState(this._tab);
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: [
         SizedBox(height: 20.0.rpx),
@@ -35,9 +37,96 @@ class _FjNewsScreenState extends State<FjNewsScreen> {
           onTab: () {},
         ),
         SizedBox(height: 20.0.rpx),
-        const FjNewsTitleImg(),
-        const FjNewsItem(),
+        Expanded(child: const FjNewsItemList()),
       ],
+    );
+  }
+}
+
+class FjNewsItemList extends StatefulWidget {
+  const FjNewsItemList({Key? key}) : super(key: key);
+
+  @override
+  _FjNewsItemListState createState() => _FjNewsItemListState();
+}
+
+class _FjNewsItemListState extends State<FjNewsItemList> {
+  List<String> items = ["1", "2", "3", ];
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
+  void _onRefresh() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    items = ["1", "2", "3", ];
+    if (mounted) setState(() {});
+
+    _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    items.add((items.length + 1).toString());
+    items.add((items.length + 1).toString());
+    if (mounted) setState(() {});
+    _refreshController.loadComplete();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SmartRefresher(
+        enablePullDown: true,
+        enablePullUp: true,
+        header: const WaterDropHeader(
+          refresh: SizedBox(
+            width: 25.0,
+            height: 25.0,
+            child: CircularProgressIndicator(
+              strokeWidth: 2.0,
+              color: Colors.red,
+            ),
+          ),
+          complete: Icon(Icons.done),
+        ),
+        footer: CustomFooter(
+          builder: (BuildContext context, LoadStatus? mode) {
+            Widget body;
+            if (mode == LoadStatus.idle) {
+              body = Text("上拉加载");
+            } else if (mode == LoadStatus.loading) {
+              body = const CupertinoActivityIndicator();
+            } else if (mode == LoadStatus.failed) {
+              body = Text("加载失败！点击重试！");
+            } else if (mode == LoadStatus.canLoading) {
+              body = Text("松手,加载更多!");
+            } else {
+              body = Text("没有更多数据了!");
+            }
+            return Container(
+              height: 55.0,
+              child: Center(child: body),
+            );
+          },
+        ),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        onLoading: _onLoading,
+        child: ListView.builder(
+          itemBuilder: (c, i) {
+            if (items[i] ==
+                "1"
+                    "") {
+              return const FjNewsTitleImg();
+            }
+            return FjNewsItem();
+          },
+          itemCount: items.length,
+        ),
+      ),
     );
   }
 }

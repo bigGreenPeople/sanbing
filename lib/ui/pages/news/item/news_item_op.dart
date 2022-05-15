@@ -13,14 +13,14 @@ class FjNewsItemOp extends StatelessWidget {
       children: [
         Icon(
           icon,
-          color: const Color.fromARGB(255, 204, 204, 204),
+          color: const Color.fromARGB(255, 172, 160, 160),
         ),
         SizedBox(
           width: 10.rpx,
         ),
         Text(
           data,
-          style: const TextStyle(color: Color.fromARGB(255, 204, 204, 204)),
+          style: const TextStyle(color: Color.fromARGB(255, 172, 160, 160),),
         )
       ],
     );
