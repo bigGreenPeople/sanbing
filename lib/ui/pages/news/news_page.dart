@@ -51,7 +51,11 @@ class FjNewsItemList extends StatefulWidget {
 }
 
 class _FjNewsItemListState extends State<FjNewsItemList> {
-  List<String> items = ["1", "2", "3", ];
+  List<String> items = [
+    "1",
+    "2",
+    "3",
+  ];
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
@@ -59,7 +63,11 @@ class _FjNewsItemListState extends State<FjNewsItemList> {
     // monitor network fetch
     await Future.delayed(Duration(milliseconds: 1000));
     // if failed,use refreshFailed()
-    items = ["1", "2", "3", ];
+    items = [
+      "1",
+      "2",
+      "3",
+    ];
     if (mounted) setState(() {});
 
     _refreshController.refreshCompleted();
@@ -71,7 +79,10 @@ class _FjNewsItemListState extends State<FjNewsItemList> {
     // if failed,use loadFailed(),if no data return,use LoadNodata()
     items.add((items.length + 1).toString());
     items.add((items.length + 1).toString());
+    items.add((items.length + 1).toString());
+
     if (mounted) setState(() {});
+
     _refreshController.loadComplete();
   }
 

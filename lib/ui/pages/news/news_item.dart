@@ -20,6 +20,7 @@ class _FjNewsItemState extends State<FjNewsItem> {
   Widget build(BuildContext context) {
 
     return Card(
+      elevation: 0,
       margin: EdgeInsets.only(top: 20.rpx),
       child: Column(
         children: [

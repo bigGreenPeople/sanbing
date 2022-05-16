@@ -17,6 +17,7 @@ class FjHomeScreen extends StatelessWidget {
           appBar: AppBar(
             // backgroundColor: Colors.white,
             toolbarHeight: 0.rpx,
+            elevation: 0,
             bottom: TabBar(
                 isScrollable: true,
                 tabs: myTabs.map<Tab>((e) => Tab(text: e)).toList()),
@@ -30,5 +31,4 @@ class FjHomeScreen extends StatelessWidget {
           ),
         ));
   }
-
 }
