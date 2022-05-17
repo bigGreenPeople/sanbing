@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:provider/provider.dart';
 import 'package:sanbing/core/extension/double_extension.dart';
 import 'package:sanbing/core/extension/int_extension.dart';
+import 'package:sanbing/core/model/news_model.dart';
+import 'package:sanbing/core/viewmodel/news_view_model.dart';
 import 'package:sanbing/ui/pages/news/news_item.dart';
 import 'package:sanbing/ui/pages/news/news_type_img.dart';
 
@@ -56,18 +59,15 @@ class _FjNewsItemListState extends State<FjNewsItemList> {
     "2",
     "3",
   ];
+
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
   void _onRefresh() async {
     // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
+    // await Future.delayed(Duration(milliseconds: 1000));
     // if failed,use refreshFailed()
-    items = [
-      "1",
-      "2",
-      "3",
-    ];
+    fjNewsViewModel?.refreshPage();
     if (mounted) setState(() {});
 
     _refreshController.refreshCompleted();
@@ -76,67 +76,70 @@ class _FjNewsItemListState extends State<FjNewsItemList> {
   void _onLoading() async {
     // monitor network fetch
     await Future.delayed(Duration(milliseconds: 1000));
-    // if failed,use loadFailed(),if no data return,use LoadNodata()
-    items.add((items.length + 1).toString());
-    items.add((items.length + 1).toString());
-    items.add((items.length + 1).toString());
-
+    fjNewsViewModel?.add();
     if (mounted) setState(() {});
 
     _refreshController.loadComplete();
   }
 
+  FjNewsViewModel? fjNewsViewModel;
   @override
   Widget build(BuildContext context) {
+    fjNewsViewModel = Provider.of<FjNewsViewModel>(context);
+
     return Scaffold(
-      body: SmartRefresher(
-        enablePullDown: true,
-        enablePullUp: true,
-        header: const WaterDropHeader(
-          refresh: SizedBox(
-            width: 25.0,
-            height: 25.0,
-            child: CircularProgressIndicator(
-              strokeWidth: 2.0,
-              color: Colors.red,
+      body: Consumer<FjNewsViewModel>(
+        builder: ((context, FjNewsViewModel newsVM, child) {
+          return SmartRefresher(
+            enablePullDown: true,
+            enablePullUp: true,
+            header: const WaterDropHeader(
+              refresh: SizedBox(
+                width: 25.0,
+                height: 25.0,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.0,
+                  color: Colors.red,
+                ),
+              ),
+              complete: Icon(Icons.done),
             ),
-          ),
-          complete: Icon(Icons.done),
-        ),
-        footer: CustomFooter(
-          builder: (BuildContext context, LoadStatus? mode) {
-            Widget body;
-            if (mode == LoadStatus.idle) {
-              body = Text("上拉加载");
-            } else if (mode == LoadStatus.loading) {
-              body = const CupertinoActivityIndicator();
-            } else if (mode == LoadStatus.failed) {
-              body = Text("加载失败！点击重试！");
-            } else if (mode == LoadStatus.canLoading) {
-              body = Text("松手,加载更多!");
-            } else {
-              body = Text("没有更多数据了!");
-            }
-            return Container(
-              height: 55.0,
-              child: Center(child: body),
-            );
-          },
-        ),
-        controller: _refreshController,
-        onRefresh: _onRefresh,
-        onLoading: _onLoading,
-        child: ListView.builder(
-          itemBuilder: (c, i) {
-            if (items[i] ==
-                "1"
-                    "") {
-              return const FjNewsTitleImg();
-            }
-            return FjNewsItem();
-          },
-          itemCount: items.length,
-        ),
+            footer: CustomFooter(
+              builder: (BuildContext context, LoadStatus? mode) {
+                Widget body;
+                if (mode == LoadStatus.idle) {
+                  body = Text("上拉加载");
+                } else if (mode == LoadStatus.loading) {
+                  body = const CupertinoActivityIndicator();
+                } else if (mode == LoadStatus.failed) {
+                  body = Text("加载失败！点击重试！");
+                } else if (mode == LoadStatus.canLoading) {
+                  body = Text("松手,加载更多!");
+                } else {
+                  body = Text("没有更多数据了!");
+                }
+                return Container(
+                  height: 55.0,
+                  child: Center(child: body),
+                );
+              },
+            ),
+            controller: _refreshController,
+            onRefresh: _onRefresh,
+            onLoading: _onLoading,
+            child: ListView.builder(
+              itemBuilder: (c, i) {
+                if (i == 0) {
+                  return const FjNewsTitleImg();
+                }
+                return FjNewsItem(
+                  newsVM.news[i],
+                );
+              },
+              itemCount: newsVM.news.length,
+            ),
+          );
+        }),
       ),
     );
   }
