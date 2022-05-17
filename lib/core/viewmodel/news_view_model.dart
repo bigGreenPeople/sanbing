@@ -30,7 +30,7 @@ class FjNewsViewModel extends ChangeNotifier {
         favorcate: 23,
         comment: 110,
         collection: 12,
-        contentImgs: ["assets/img/game_content.png"]),
+        contentImgs: ["assets/img/game_content2.png"]),
   ];
 
   List<FjNewsModel> get news {
@@ -59,7 +59,7 @@ class FjNewsViewModel extends ChangeNotifier {
           favorcate: 23,
           comment: 110,
           collection: 12,
-          contentImgs: ["assets/img/game_content.png"]),
+          contentImgs: ["assets/img/game_content2.png"]),
     ];
   }
 
@@ -73,7 +73,7 @@ class FjNewsViewModel extends ChangeNotifier {
         favorcate: 23,
         comment: 110,
         collection: 12,
-        contentImgs: ["assets/img/game_content.png"]));
+        contentImgs: ["assets/img/game_content3.png"]));
 
     notifyListeners();
   }

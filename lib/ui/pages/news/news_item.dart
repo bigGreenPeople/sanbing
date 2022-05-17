@@ -26,12 +26,13 @@ class _FjNewsItemState extends State<FjNewsItem> {
       margin: EdgeInsets.only(top: 20.rpx),
       child: Column(
         children: [
-          FjNewsItemTitle(widget.fjNewsModel.title!, logo: widget.fjNewsModel.logo!),
+          FjNewsItemTitle(widget.fjNewsModel.title!,
+              logo: widget.fjNewsModel.logo!),
           Divider(
             height: 10.0.rpx,
             color: Colors.grey,
           ),
-          FjNewsItemContent(widget.fjNewsModel.content!,
+          FjNewsItemContent(widget.fjNewsModel,
               image: Image.asset(
                 widget.fjNewsModel.contentImgs![0],
                 fit: BoxFit.cover,
